@@ -3,8 +3,10 @@ import type { DailyDigest } from './sources/types'
 const memoryCache = new Map<string, { data: DailyDigest; expiresAt: number }>()
 const TTL_MS = 6 * 60 * 60 * 1000
 
+const CACHE_VERSION = 'v2'
+
 function key(date: string) {
-  return `digest:${date}`
+  return `digest:${CACHE_VERSION}:${date}`
 }
 
 function todayKey() {

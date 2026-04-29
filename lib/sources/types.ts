@@ -33,6 +33,9 @@ export interface Trend {
   topic: string
   summary: string
   whyItMatters: string
+  topicZh?: string
+  summaryZh?: string
+  whyItMattersZh?: string
   postCount: number
   sources: SourceName[]
   posts: Post[]

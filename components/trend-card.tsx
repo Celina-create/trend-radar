@@ -2,16 +2,39 @@
 
 import { useState } from 'react'
 import type { Trend } from '@/lib/sources/types'
+import type { Lang } from '@/lib/i18n'
+import { messages } from '@/lib/i18n'
 import { SOURCE_LABELS } from '@/lib/sources'
-import { ChevronDown, ChevronUp, ExternalLink, MessageSquare, ArrowUp } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  MessageSquare,
+  ArrowUp,
+} from 'lucide-react'
 
 interface Props {
   trend: Trend
   rank: number
+  lang: Lang
 }
 
-export function TrendCard({ trend, rank }: Props) {
+function pickText(
+  trend: Trend,
+  lang: Lang,
+  field: 'topic' | 'summary' | 'whyItMatters'
+): string {
+  if (lang === 'zh') {
+    const zhField = (field + 'Zh') as 'topicZh' | 'summaryZh' | 'whyItMattersZh'
+    const zh = trend[zhField]
+    if (zh && zh.trim().length > 0) return zh
+  }
+  return trend[field]
+}
+
+export function TrendCard({ trend, rank, lang }: Props) {
   const [open, setOpen] = useState(false)
+  const t = messages[lang]
 
   return (
     <div className="card overflow-hidden">
@@ -25,13 +48,15 @@ export function TrendCard({ trend, rank }: Props) {
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-[14px] font-medium text-text-primary mb-1.5 leading-snug">
-              {trend.topic}
+              {pickText(trend, lang, 'topic')}
             </h3>
             <p className="text-[13px] text-text-secondary leading-relaxed mb-2">
-              {trend.summary}
+              {pickText(trend, lang, 'summary')}
             </p>
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="tag-accent">{trend.postCount} posts</span>
+              <span className="tag-accent">
+                {t.postsCountLabel(trend.postCount)}
+              </span>
               {trend.sources.map((s) => (
                 <span key={s} className="tag">
                   {SOURCE_LABELS[s]}
@@ -53,14 +78,14 @@ export function TrendCard({ trend, rank }: Props) {
         <div className="border-t bg-bg/40">
           <div className="px-5 py-4">
             <div className="text-[11px] uppercase tracking-wider text-text-muted mb-2 font-medium">
-              Why it matters
+              {t.whyItMatters}
             </div>
             <p className="text-[13px] text-text-primary leading-relaxed mb-5">
-              {trend.whyItMatters}
+              {pickText(trend, lang, 'whyItMatters')}
             </p>
 
             <div className="text-[11px] uppercase tracking-wider text-text-muted mb-2 font-medium">
-              Top posts
+              {t.topPosts}
             </div>
             <ul className="space-y-2">
               {trend.posts.slice(0, 8).map((p) => (
