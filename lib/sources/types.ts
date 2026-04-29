@@ -1,7 +1,7 @@
 export type SourceName =
   | 'hackernews'
-  | 'reddit-localllama'
-  | 'reddit-machinelearning'
+  | 'lobsters'
+  | 'hackernoon'
   | 'devto'
   | 'github-trending'
 

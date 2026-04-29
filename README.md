@@ -8,7 +8,7 @@ Built by [Celina](https://github.com/Celina-create) as a **portfolio agent** for
 
 ## What it does
 
-- Pulls today's top posts from **5 sources** (MVP): Hacker News · r/LocalLLaMA · r/MachineLearning · Dev.to (AI tag) · GitHub Trending
+- Pulls today's top posts from **5 sources** (MVP): Hacker News · Lobsters · HackerNoon (AI tag) · Dev.to (AI tag) · GitHub Trending
 - **Clusters** posts by token-level Jaccard similarity (no embeddings needed for MVP)
 - **Summarizes** each cluster with `gpt-4o-mini` via Vercel AI SDK — produces a topic, neutral summary, and "why it matters for growth"
 - **Ranks** clusters by cross-source signal density
